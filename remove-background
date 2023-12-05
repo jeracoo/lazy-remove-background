@@ -1,0 +1,29 @@
+from rembg import remove
+from PIL import Image
+import os
+
+# Set the folder path where your images are located
+folder_path = r'D:\Google Drive\Art\Wrenny moo\Ripper'
+
+# Create a folder to save the processed images
+output_folder = os.path.join(folder_path, 'background_removed')
+os.makedirs(output_folder, exist_ok=True)
+
+# Loop through all files in the folder
+for file_name in os.listdir(folder_path):
+    file_path = os.path.join(folder_path, file_name)
+    
+    # Check if the file is an image (you can customize this condition)
+    if file_name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff')):
+        # Open the image
+        image_input = Image.open(file_path)
+        
+        # Remove the background from the image
+        output = remove(image_input)
+        
+        # Save the processed image to the output folder as PNG
+        output_path = os.path.join(output_folder, file_name)
+        output.save(output_path, 'PNG')  # Save as PNG format
+        print(f"Background removed and image saved: {output_path}")
+
+print("Background removal process completed.")
